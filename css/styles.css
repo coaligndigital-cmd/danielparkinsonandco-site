@@ -1088,3 +1088,196 @@ footer {
     transition-duration: .01ms !important;
   }
 }
+
+/* =========================================================
+   Daniel Parkinson & Co. — v2 premium experience overrides
+   ========================================================= */
+
+:root {
+  --ease-premium: cubic-bezier(.22,.61,.36,1);
+  --header-height-v2: 82px;
+}
+
+html { scroll-behavior: smooth; }
+body { overflow-x: hidden; }
+body.nav-open { overflow: hidden; }
+
+/* Transparent hero navigation, glass on scroll */
+header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1000;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  transition: background-color .35s var(--ease-premium), border-color .35s var(--ease-premium), box-shadow .35s var(--ease-premium), backdrop-filter .35s var(--ease-premium);
+}
+header.is-scrolled {
+  border-color: rgba(29,31,32,.08);
+  background: rgba(243,241,236,.88);
+  box-shadow: 0 10px 30px rgba(29,31,32,.05);
+  backdrop-filter: blur(18px);
+}
+header nav { min-height: var(--header-height-v2); }
+header .logo,
+header #primary-navigation a { color: rgba(255,255,255,.94); }
+header.is-scrolled .logo,
+header.is-scrolled #primary-navigation a { color: var(--graphite); }
+header .logo { transition: color .3s var(--ease-premium), transform .3s var(--ease-premium); }
+header.is-scrolled .logo { transform: scale(.96); }
+
+#primary-navigation a:not(.nav-cta)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -8px;
+  left: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: var(--copper);
+  transition: transform .28s var(--ease-premium);
+}
+#primary-navigation a:hover::after,
+#primary-navigation a[aria-current="page"]::after { transform: scaleX(1); }
+
+/* Cinematic hero */
+.hero-banner,
+.hero-full {
+  min-height: 100svh;
+  align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero-banner::before,
+.hero-full::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg,rgba(29,31,32,.16),rgba(29,31,32,.72)), linear-gradient(90deg,rgba(29,31,32,.84),rgba(29,31,32,.24));
+}
+.hero-content {
+  max-width: 980px;
+  padding-top: calc(var(--header-height-v2) + 6rem);
+  padding-bottom: 7rem;
+}
+.hero-banner h1 {
+  font-size: clamp(3.6rem,7.3vw,7.6rem);
+  line-height: .94;
+  letter-spacing: -.075em;
+}
+.hero-banner .lead { max-width: 760px; }
+
+/* Editorial scale and spacing */
+.editorial-section { padding: clamp(6rem,11vw,10rem) 0; }
+.editorial-item {
+  padding: 2.65rem 0;
+  transition: padding-left .28s var(--ease-premium), background-color .28s var(--ease-premium);
+}
+.editorial-item:hover { padding-left: 12px; color: var(--graphite); }
+.editorial-item h3 { font-size: clamp(1.9rem,3.3vw,3.2rem); }
+.editorial-item .item-arrow { transition: transform .25s var(--ease-premium); }
+.editorial-item:hover .item-arrow { transform: translate(4px,-4px); }
+.learn-list a span:last-child { transition: transform .25s var(--ease-premium); }
+.learn-list a:hover span:last-child { transform: translate(4px,-4px); }
+
+/* Premium image pauses */
+.image-break {
+  min-height: clamp(420px,68vw,820px);
+  padding: 0;
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+}
+.image-break::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,rgba(29,31,32,.04),rgba(29,31,32,.18));
+}
+.image-break img {
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  object-fit: cover;
+  transform: scale(1.04);
+}
+
+/* Refined interactions */
+.card,
+.testimonial,
+.why-card,
+.learn-card,
+.fit-card,
+.who-card,
+.image-panel img,
+.button {
+  transition: transform .3s var(--ease-premium), box-shadow .3s var(--ease-premium), background-color .3s var(--ease-premium), border-color .3s var(--ease-premium);
+}
+.card:hover,
+.testimonial:hover,
+.why-card:hover,
+.learn-card:hover,
+.fit-card:hover,
+.who-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 80px rgba(29,31,32,.12);
+}
+.image-panel:hover img { transform: scale(1.025); }
+.button:hover { transform: translateY(-2px); }
+
+/* Scroll reveal system */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity .8s var(--ease-premium), transform .8s var(--ease-premium);
+  will-change: opacity, transform;
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: .08s; }
+.reveal-delay-2 { transition-delay: .16s; }
+.reveal-delay-3 { transition-delay: .24s; }
+.parallax,
+.hero-fade { will-change: transform, opacity; }
+
+@media (max-width: 960px) {
+  :root { --header-height-v2: 74px; }
+  #primary-navigation {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(88vw,420px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 18px;
+    padding: 90px 34px 40px;
+    transform: translateX(100%);
+    background: rgba(243,241,236,.98);
+    box-shadow: -20px 0 60px rgba(29,31,32,.12);
+    transition: transform .4s var(--ease-premium);
+  }
+  #primary-navigation a,
+  header.is-scrolled #primary-navigation a {
+    color: var(--graphite);
+    font-family: Sora,sans-serif;
+    font-size: 1.25rem;
+  }
+  #primary-navigation.is-open { transform: translateX(0); }
+  .hero-banner,
+  .hero-full { min-height: 90svh; }
+  .hero-content { padding-bottom: 5rem; }
+}
+
+@media (max-width: 640px) {
+  .hero-banner,
+  .hero-full { min-height: 86svh; }
+  .hero-banner h1 { font-size: clamp(3rem,15vw,4.8rem); }
+  .hero-content { padding-bottom: 4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; }
+}
